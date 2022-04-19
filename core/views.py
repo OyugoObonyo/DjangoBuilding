@@ -1,11 +1,9 @@
 from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
+from buildings.models import Building
 
-buildings = {"Block A", "Block B", "Block C", "Block D"} 
 
-def home(request, id):
+def home(request):
+    buildings = Building.objects.all()
     return render(request, 'home.html', {"buildings": buildings})
-
-def room(request):
-    return render(request, 'room.html')

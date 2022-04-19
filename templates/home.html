@@ -7,9 +7,16 @@
     <title>Home page</title>
 </head>
 <body>
-    <h1> This is the homepage </h1>
+    <h1> All buildings: </h1>
+    <a href="{% url 'add-building' %}">Add a building</a>
     {% for building in buildings %}
-    <h3>{{ building }}</h3>
+    <div>
+        <h3>{{ building }}</h3>
+        <h4>Created_at: {{ building.created_at }}</h4>
+        <h4>Units remaining: {{ building.units_count }}</h4>
+        <h4>Owned_by: {{ building.owner}}</h4>
+        <hr>
+    </div>
     {% endfor %}   
 </body>
 </html>

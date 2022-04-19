@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.deletion import CASCADE
 
 
 class Building(models.Model):
@@ -9,10 +11,10 @@ class Building(models.Model):
 
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
-    owner = models.CharField(max_length=50)
-    units_count = models.IntegerField
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    units_count = models.IntegerField() 
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Building id:{self.id}, Building name: {self.name}"
+        return self.name

@@ -15,6 +15,7 @@
         <h4>Created_at: {{ building.created_at }}</h4>
         <h4>Units remaining: {{ building.units_count }}</h4>
         <h4>Owned_by: {{ building.owner}}</h4>
+        <a href="{% url 'update-building' building.id %}">Edit</a>
         <hr>
     </div>
     {% endfor %}   

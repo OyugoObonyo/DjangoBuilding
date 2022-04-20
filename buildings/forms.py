@@ -7,3 +7,8 @@ class AddBuildingForm(ModelForm):
     class Meta:
         model = Building
         fields = '__all__'
+
+class UpdateBuildingForm(ModelForm):
+    class Meta:
+        model = Building
+        fields = ["name", "location", "units_count"]

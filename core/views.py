@@ -5,5 +5,9 @@ from buildings.models import Building
 
 
 def home(request):
-    buildings = Building.objects.all()
+    if request.GET.get('q') != None:
+        q = request.GET.get('q')
+    else:
+        q = ''
+    buildings = Building.objects.filter(location__icontains=q)
     return render(request, 'home.html', {"buildings": buildings})

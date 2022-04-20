@@ -7,16 +7,43 @@
     <title>Home page</title>
 </head>
 <body>
+    <style>
+        .home-container{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+    </style>
+    <form method="GET" action="{% url 'home' %}">
+        <input type="text" name="q" placeholder="Explore locations...">
+    </form>
     <h1> All buildings: </h1>
-    <a href="{% url 'add-building' %}">Add a building</a>
-    {% for building in buildings %}
-    <div>
-        <h3>{{ building }}</h3>
-        <h4>Created_at: {{ building.created_at }}</h4>
-        <h4>Units remaining: {{ building.units_count }}</h4>
-        <h4>Owned_by: {{ building.owner}}</h4>
-        <hr>
+    <div class="home-container">
+        <div>
+            <h3>Browse locations</h3>
+            <hr>
+            <div>
+                <a href="{% url 'home' %}">All</a>
+            </div>
+            {% for building in buildings %}
+            <div>
+                <a href="{% url 'home' %}?q={{ building.location }}">{{ building.location }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'add-building' %}">Add a building</a>
+            {% for building in buildings %}
+            <div>
+                <h3>{{ building }}</h3>
+                <h4>Location: {{ building.location }}</h4>
+                <h4>Units remaining: {{ building.units_count }}</h4>
+                <b><small> Posted by {{ building.owner }} on {{ building.created_at }}</small></b><br><br>
+                <a href="{% url 'update-building' building.id %}">Edit</a>
+                <a href="{% url 'delete-building' building.id %}">Delete</a>
+                <hr>
+            </div>
+            {% endfor %} 
+        </div>
     </div>
-    {% endfor %}   
 </body>
 </html>

@@ -36,3 +36,14 @@ def update_building(request, id):
             return redirect('home')
     context = {"form": form}
     return render(request, 'buildings/update_building_form.html', context)
+
+
+def delete_building(request, id):
+    """
+    
+    delete_bulding deletes a building from the db
+    """
+
+    building = Building.objects.get(id=id)
+    building.delete()
+    return redirect('home')

@@ -46,8 +46,8 @@ def register_user(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             # don't commit user object to DB but immediately capture and store created item
-            user = form.save(commit=False)
+            # user = form.save(commit=False)
+            form.save()
             # you can perform whatever action here on the frozen user object
-            user.save()
             return redirect('login')
     return render(request, 'authentication/register_form.html', context)

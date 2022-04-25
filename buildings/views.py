@@ -1,10 +1,10 @@
-from multiprocessing import context
+from django.contrib.auth.decorators import login_required 
 from django.shortcuts import render, redirect
-
 from buildings.models import Building
 from .forms import AddBuildingForm, UpdateBuildingForm
 
 
+@login_required(login_url='login')
 def add_building(request):
     """
 
@@ -21,6 +21,7 @@ def add_building(request):
     return render(request, 'buildings/create_building_form.html', context)
 
 
+@login_required(login_url='login')
 def update_building(request, id):
     """
     
@@ -38,6 +39,7 @@ def update_building(request, id):
     return render(request, 'buildings/update_building_form.html', context)
 
 
+@login_required(login_url='login')
 def delete_building(request, id):
     """
     

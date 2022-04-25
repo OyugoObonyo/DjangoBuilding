@@ -16,6 +16,11 @@
     <form method="GET" action="{% url 'home' %}">
         <input type="text" name="q" placeholder="Explore locations...">
     </form>
+    {% if request.user.is_authenticated %}
+    <button><a href="{% url 'logout' %}">Log out</a></button>
+    {% else %}
+    <button><a href="{% url 'login' %}">Log In</a></button>
+    {% endif %}
     <h1> All buildings: </h1>
     <div class="home-container">
         <div>
@@ -38,8 +43,10 @@
                 <h4>Location: {{ building.location }}</h4>
                 <h4>Units remaining: {{ building.units_count }}</h4>
                 <b><small> Posted by {{ building.owner }} on {{ building.created_at }}</small></b><br><br>
+                {% if request.user == building.owner %}
                 <a href="{% url 'update-building' building.id %}">Edit</a>
                 <a href="{% url 'delete-building' building.id %}">Delete</a>
+                {% endif %}
                 <hr>
             </div>
             {% endfor %} 

@@ -1,6 +1,5 @@
-from multiprocessing import context
+from django.db.models import Q
 from django.shortcuts import render
-from django.http import HttpResponse
 from buildings.models import Building
 
 
@@ -9,5 +8,10 @@ def home(request):
         q = request.GET.get('q')
     else:
         q = ''
-    buildings = Building.objects.filter(location__icontains=q)
+    # icontains isn't case sensitive whereas conatins is case_sensitive
+    buildings = Building.objects.filter(
+        Q(location__icontains=q) |
+        Q(name__icontains=q) |
+        Q(owner__username__icontains=q)
+    )
     return render(request, 'home.html', {"buildings": buildings})

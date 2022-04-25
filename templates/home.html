@@ -50,6 +50,9 @@
                 {% if request.user in building.tenants %}
                 <a href="{% url 'review-building' building.id %}">Review</a>
                 {% endif %}
+                {% if request.user not in building.tenants %}
+                <a href="{% url 'move-in-building' building.id %}">Move in</a>
+                {% endif %}
                 <a href="{% url 'show-reviews' building.id %}">Show all reviews</a>
                 <hr>
             </div>

@@ -1,4 +1,5 @@
-from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse 
 from django.shortcuts import render, redirect
 from buildings.models import Building
 from .forms import AddBuildingForm, UpdateBuildingForm
@@ -65,5 +66,14 @@ def show_reviews(request, id):
     
     show_reviews shows all reviews for a particular building
     """
+    building = Building.objects.get(id=id)
+    building_reviews = building.review_set.all()
+    context = {"building": building, "building_reviews": building_reviews}
+    return render(request, 'buildings/show_all_reviews.html', context)
 
-    return render(request, 'buildings/show_all_reviews.html')
+def move_in_building(request, id):
+    """
+    
+    move_in_building allows users to move into a partcular building
+    """
+    return HttpResponse("You have moved into building...")

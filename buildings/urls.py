@@ -6,6 +6,7 @@ urlpatterns = [
     path('add-building/', views.add_building, name="add-building"),
     path('update-building/<int:id>/', views.update_building, name="update-building"),
     path('delete-building/<int:id>/', views.delete_building, name="delete-building"),
-    path('review-building/<int:id>/', views.delete_building, name="review-building"),
-    path('show-reviews/<int:id>/', views.delete_building, name="show-reviews")
+    path('review-building/<int:id>/', views.review_building, name="review-building"),
+    path('show-reviews/<int:id>/', views.show_reviews, name="show-reviews"),
+    path('move-in-building/<int:id>/', views.move_in_building, name="move-in-building")
 ]

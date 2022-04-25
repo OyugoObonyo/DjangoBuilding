@@ -14,6 +14,16 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class Tenant(models.Model):
+    """
+    
+    A class representing the tenants table in the database
+    """
+
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class Building(models.Model):
     """
@@ -28,6 +38,7 @@ class Building(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)
+    tenants = models.ManyToManyField(Tenant)
 
     def __str__(self):
         return self.name

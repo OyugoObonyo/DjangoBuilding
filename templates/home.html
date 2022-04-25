@@ -47,6 +47,10 @@
                 <a href="{% url 'update-building' building.id %}">Edit</a>
                 <a href="{% url 'delete-building' building.id %}">Delete</a>
                 {% endif %}
+                {% if request.user in building.tenants %}
+                <a href="{% url 'review-building' building.id %}">Review</a>
+                {% endif %}
+                <a href="{% url 'show-reviews' building.id %}">Show all reviews</a>
                 <hr>
             </div>
             {% endfor %} 

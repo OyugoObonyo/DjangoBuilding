@@ -9,7 +9,13 @@ class Tag(models.Model):
     A class representing the tag table in the database
     """
 
-    name = models.CharField(max_length=20, null=True)
+    tag_choices = (
+        ("commercial", "commercial"),
+        ("residential", "residential"),
+        ("industrial", "industrial")
+    )
+    
+    name = models.CharField(max_length=20, choices=tag_choices, default="residential")
 
     def __str__(self):
         return self.name

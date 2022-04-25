@@ -49,3 +49,21 @@ def delete_building(request, id):
     building = Building.objects.get(id=id)
     building.delete()
     return redirect('home')
+
+@login_required(login_url='login')
+def review_building(request, id):
+    """
+    
+    review_building enables users to add reviews for a particular building
+    """
+
+    return render(request, 'buildings/review_building_form.html')
+
+@login_required(login_url='login')
+def show_reviews(request, id):
+    """
+    
+    show_reviews shows all reviews for a particular building
+    """
+
+    return render(request, 'buildings/show_all_reviews.html')

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Building
+from .models import Building, Review
 
 
 class AddBuildingForm(ModelForm):

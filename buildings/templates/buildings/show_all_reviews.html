@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All reviews</title>
+    <title>Review a building</title>
 </head>
 <body>
     <div>
-        <h1>All reviews for a particular building</h1>
+        <h3>{{ building }}</h3>
+        <h4>Location: {{ building.location }}</h4>
+        <h4>Units remaining: {{ building.units_count }}</h4>
+        <b><small> Posted by {{ building.owner }} on {{ building.created_at }}</small></b>
     </div>
+    <hr>
+    {% for building_review in building_reviews %}
+    {{ building_review.body }}<br>
+    <b><small>{{ building_review.owner }}, {{ building_review.created_at | timesince }} ago</small></b><br>
+    {% endfor %}
+    <br>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="review" placeholder="Add a review..."><br>
+        <input type="submit" value="Review building">
+    </form>
+
 </body>
 </html>

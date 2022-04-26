@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse 
 from django.shortcuts import render, redirect
-from buildings.models import Building
+from buildings.models import Building, Review
 from .forms import AddBuildingForm, UpdateBuildingForm
 
 
@@ -52,28 +52,39 @@ def delete_building(request, id):
     return redirect('home')
 
 @login_required(login_url='login')
-def review_building(request, id):
-    """
-    
-    review_building enables users to add reviews for a particular building
-    """
-
-    return render(request, 'buildings/review_building_form.html')
-
-@login_required(login_url='login')
 def show_reviews(request, id):
     """
     
     show_reviews shows all reviews for a particular building
     """
+    
     building = Building.objects.get(id=id)
     building_reviews = building.review_set.all()
+    if request.method == "POST":
+        body = request.POST.get("review")
+        review = Review(body=body, owner=request.user, building=building)
+        review.save()
+        return redirect(request.META.get('HTTP_REFERER', '/'))    
     context = {"building": building, "building_reviews": building_reviews}
     return render(request, 'buildings/show_all_reviews.html', context)
 
+@login_required(login_url='login')
 def move_in_building(request, id):
     """
     
     move_in_building allows users to move into a partcular building
     """
     return HttpResponse("You have moved into building...")
+
+@login_required(login_url='login')
+def view_tenants(request, id):
+    """
+    
+    view_tenants allows users to view all tenants of a particular building
+    """
+    
+    
+    building = Building.objects.get(id=id)
+    building_tenants = building.tenant_set.all()
+    context = {"building": building, "building_tenants": building_tenants} 
+    return render(request, 'buildings/show_all_tenants.html', context)

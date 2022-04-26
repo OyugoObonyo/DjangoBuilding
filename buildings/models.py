@@ -56,7 +56,6 @@ class Review(models.Model):
     A class representing the review table in the database 
     """
 
-    title = models.CharField(max_length=50)
     body = models.CharField(max_length=150)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)

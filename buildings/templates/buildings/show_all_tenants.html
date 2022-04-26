@@ -8,7 +8,16 @@
 </head>
 <body>
     <div>
-        <h1>Showing all tenants...</h1>
+        <h3>{{ building }}</h3>
+        <h4>Location: {{ building.location }}</h4>
+        <h4>Units remaining: {{ building.units_count }}</h4>
+        <b><small> Posted by {{ building.owner }} on {{ building.created_at }}</small></b>
+        <hr>
+        <h1>Tenants:</h1>
+        {% for tenant in building_tenants %}
+        {{ forloop.counter }}) {{ tenant }}<br>
+        {% endfor %}
+        <br>
     </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse 
 from django.shortcuts import render, redirect
-from buildings.models import Building, Review
+from buildings.models import Building, Review, Tenant
 from .forms import AddBuildingForm, UpdateBuildingForm
 
 
@@ -60,12 +60,13 @@ def show_reviews(request, id):
     
     building = Building.objects.get(id=id)
     building_reviews = building.review_set.all()
+    tenants = building.tenants.all()
     if request.method == "POST":
         body = request.POST.get("review")
         review = Review(body=body, owner=request.user, building=building)
         review.save()
         return redirect(request.META.get('HTTP_REFERER', '/'))    
-    context = {"building": building, "building_reviews": building_reviews}
+    context = {"building": building, "building_reviews": building_reviews, "tenants": tenants}
     return render(request, 'buildings/show_all_reviews.html', context)
 
 @login_required(login_url='login')
@@ -74,7 +75,14 @@ def move_in_building(request, id):
     
     move_in_building allows users to move into a partcular building
     """
-    return HttpResponse("You have moved into building...")
+    building = Building.objects.get(id=id)
+    tenant = Tenant(name=request.user)
+    # instead of saving twice, i.e tenant.save and building.save, consider how to
+    # implement 'through' in the database models
+    tenant.save()
+    building.tenants.add(tenant)
+    building.save()
+    return HttpResponse("You are now a tenant...")
 
 @login_required(login_url='login')
 def view_tenants(request, id):
@@ -85,6 +93,6 @@ def view_tenants(request, id):
     
     
     building = Building.objects.get(id=id)
-    building_tenants = building.tenant_set.all()
+    building_tenants = building.tenants.all()
     context = {"building": building, "building_tenants": building_tenants} 
     return render(request, 'buildings/show_all_tenants.html', context)

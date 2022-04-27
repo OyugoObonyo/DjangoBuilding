@@ -62,9 +62,11 @@ def show_reviews(request, id):
     building_reviews = building.review_set.all()
     tenants = building.tenants.all()
     if request.method == "POST":
-        body = request.POST.get("review")
-        review = Review(body=body, owner=request.user, building=building)
-        review.save()
+        review = Review.objects.create(
+            body = request.POST.get("review"),
+            owner=request.user,
+            building=building
+        )
         return redirect(request.META.get('HTTP_REFERER', '/'))    
     context = {"building": building, "building_reviews": building_reviews, "tenants": tenants}
     return render(request, 'buildings/show_all_reviews.html', context)

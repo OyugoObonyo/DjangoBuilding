@@ -47,6 +47,9 @@
                 <a href="{% url 'update-building' building.id %}">Edit</a>
                 <a href="{% url 'delete-building' building.id %}">Delete</a>
                 {% endif %}
+                <a href="{% url 'show-reviews' building.id %}">Show all reviews</a>
+                <a href="{% url 'move-in-building' building.id %}">Become a tenant</a>
+                <a href="{% url 'view-tenants' building.id %}">Show all tenants</a>
                 <hr>
             </div>
             {% endfor %} 
